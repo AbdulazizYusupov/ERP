@@ -46,14 +46,14 @@
     </div>
 
     @if ($modalOpen)
-        @include('manufacturer.create-modal')
+        @include('manufacturer.products.create-modal')
     @endif
 
     @if ($editModalOpen)
-        @include('manufacturer.edit-modal')
+        @include('manufacturer.products.edit-modal')
     @endif
 
     @if ($viewModalOpen)
-        @include('manufacturer.view-modal')
+        @include('manufacturer.products.view-modal')
     @endif
 </div>

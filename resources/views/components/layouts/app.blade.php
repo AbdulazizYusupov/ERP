@@ -199,6 +199,20 @@
                                 <p>Products</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('machines.index') }}"
+                                class="nav-link {{ request()->is('machines*') ? 'active' : '' }}">
+                                <i class="fas fa-tractor"></i>
+                                <p>Machines</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('produces.index') }}"
+                                class="nav-link {{ request()->is('produces*') ? 'active' : '' }}">
+                                <i class="fas fa-industry"></i>
+                                <p>Production</p>
+                            </a>
+                        </li>
                         <li class="list-group-item">
                             <form action="{{ route('logout') }}" method="POST"
                                 class="d-flex align-items-center w-100">
@@ -217,7 +231,7 @@
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">
-                    @if (request()->route()->getName() == 'products.index')
+                    @if (request()->route()->getName() == 'products.index' || request()->route()->getName() == 'produces.index')
                         {{ $slot }}
                     @else
                         @yield('content')

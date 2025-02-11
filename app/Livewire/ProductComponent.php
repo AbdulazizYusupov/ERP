@@ -121,11 +121,14 @@ class ProductComponent extends Component
         ProductMaterial::where('product_id', $product->id)->delete();
 
         foreach ($this->materials as $mat) {
+            $material = Material::find($mat['material_id']);
+            $unit = $material->entry_materials->first()->unit ?? '';
+
             ProductMaterial::create([
                 'product_id' => $product->id,
                 'material_id' => $mat['material_id'],
                 'value' => $mat['value'],
-                'unit' => $mat['unit'],
+                'unit' => $unit,
                 'warehouse_id' => 1
             ]);
         }
@@ -161,6 +164,6 @@ class ProductComponent extends Component
 
     public function render()
     {
-        return view('manufacturer.product-component', ['materialsList' => Material::all()]);
+        return view('manufacturer.products.product-component', ['materialsList' => Material::all()]);
     }
 }

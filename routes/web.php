@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\MachineController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RevenueController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WorkerController;
+use App\Livewire\ProduceComponent;
 use App\Livewire\ProductComponent;
 
 Route::get('/', function () {
@@ -95,7 +97,6 @@ Route::middleware('check')->group(function () {
 
     Route::prefix('revenues')->group(function () {
         Route::get('/', [RevenueController::class, 'index'])->name('revenues.index');
-   
         Route::get('/create', [RevenueController::class, 'create'])->name('revenues.create');
         Route::get('/{revenue}', [RevenueController::class, 'show'])->name('revenues.show');
         Route::post('/', [RevenueController::class, 'store'])->name('revenues.store');
@@ -103,5 +104,19 @@ Route::middleware('check')->group(function () {
 
     Route::prefix('products')->group(function () {
         Route::get('/', ProductComponent::class)->name('products.index');
+    });
+
+    Route::prefix('machines')->group(function () {
+        Route::get('/', [MachineController::class, 'index'])->name('machines.index');
+        Route::get('/create', [MachineController::class, 'create'])->name('machines.create');
+        Route::post('/', [MachineController::class, 'store'])->name('machines.store');
+        Route::get('/{machine}/edit', [MachineController::class, 'edit'])->name('machines.edit');
+        Route::put('/{machine}', [MachineController::class, 'update'])->name('machines.update');
+        Route::delete('/{machine}', [MachineController::class, 'destroy'])->name('machines.destroy');
+        Route::patch('/{machine}/status', [MachineController::class, 'status'])->name('machines.status');
+    });
+
+    Route::prefix('produces')->group(function () {
+        Route::get('/',ProduceComponent::class)->name('produces.index');
     });
 });

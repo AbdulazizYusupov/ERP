@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Warehouse::class, 'user_id');
     }
+
+    public function machine_produces()
+    {
+        return $this->hasMany(MachineProduce::class, 'user_id');
+    }
 }
