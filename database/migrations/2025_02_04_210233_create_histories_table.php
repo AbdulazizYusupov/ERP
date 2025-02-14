@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('was');
             $table->double('been');
             $table->unsignedBigInteger('from_id');
-            $table->foreignId('to_id')->constrained('warehouses')->onDelete('cascade');
+            $table->unsignedBigInteger('to_id');
             $table->timestamps();
         });
     }

@@ -90,129 +90,157 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li
-                            class="nav-item has-treeview {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') || request()->is('groups*') ? 'menu-open' : '' }}">
-                            <a href="#"
-                                class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') || request()->is('groups*') ? 'active' : '' }}">
-                                <i class="fas fa-cogs"></i>
-                                <p>
-                                    Auth
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('users.index') }}"
-                                        class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
-                                        <i class="fas fa-user"></i>
-                                        <p>Users</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('roles.index') }}"
-                                        class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
-                                        <i class="fas fa-user-shield"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('permissions.index') }}"
-                                        class="nav-link {{ request()->is('permissions*') ? 'active' : '' }}">
-                                        <i class="fas fa-lock"></i>
-                                        <p>Permissions</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('groups.index') }}"
-                                        class="nav-link {{ request()->is('groups*') ? 'active' : '' }}">
-                                        <i class="fas fa-users"></i>
-                                        <p>Groups</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li
-                            class="nav-item has-treeview {{ request()->is('salary_types*') || request()->is('sections*') || request()->is('workers*') ? 'menu-open' : '' }}">
-                            <a href="#"
-                                class="nav-link {{ request()->is('salary_types*') || request()->is('sections*') || request()->is('workers*') ? 'active' : '' }}">
-                                <i class="fas fa-user-tie"></i>
-                                <p>
-                                    HR
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('salary_types.index') }}"
-                                        class="nav-link {{ request()->is('salary_types*') ? 'active' : '' }}">
-                                        <i class="fas fa-calculator"></i>
-                                        <p>Salary Types</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('sections.index') }}"
-                                        class="nav-link {{ request()->is('sections*') ? 'active' : '' }}">
-                                        <i class="fas fa-layer-group"></i>
-                                        <p>Sections</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('workers.index') }}"
-                                        class="nav-link {{ request()->is('workers*') ? 'active' : '' }}">
-                                        <i class="fas fa-users-cog"></i>
-                                        <p>Workers</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li
-                            class="nav-item has-treeview {{ request()->is('warehouses*') || request()->is('revenues*') ? 'menu-open' : '' }}">
-                            <a href="#"
-                                class="nav-link {{ request()->is('warehouses*') || request()->is('revenues*') ? 'active' : '' }}">
-                                <i class="fas fa-warehouse"></i>
-                                <p>
-                                    Warehouse Manager
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('warehouses.index') }}"
-                                        class="nav-link {{ request()->is('warehouses*') ? 'active' : '' }}">
-                                        <i class="fas fa-boxes"></i>
-                                        <p>Warehouses</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('revenues.index') }}"
-                                        class="nav-link {{ request()->is('revenues*') ? 'active' : '' }}">
-                                        <i class="fas fa-chart-line"></i>
-                                        <p>Revenues</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('products.index') }}"
-                                class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
-                                <i class="fas fa-tags"></i>
-                                <p>Products</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('machines.index') }}"
-                                class="nav-link {{ request()->is('machines*') ? 'active' : '' }}">
-                                <i class="fas fa-tractor"></i>
-                                <p>Machines</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('produces.index') }}"
-                                class="nav-link {{ request()->is('produces*') ? 'active' : '' }}">
-                                <i class="fas fa-industry"></i>
-                                <p>Production</p>
-                            </a>
-                        </li>
+                        @if (auth()->user()->role_id == 1)
+                            <li
+                                class="nav-item has-treeview {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') || request()->is('groups*') ? 'menu-open' : '' }}">
+                                <a href="#"
+                                    class="nav-link {{ request()->is('users*') || request()->is('roles*') || request()->is('permissions*') || request()->is('groups*') ? 'active' : '' }}">
+                                    <i class="fas fa-cogs"></i>
+                                    <p>
+                                        Auth
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('users.index') }}"
+                                            class="nav-link {{ request()->is('users*') ? 'active' : '' }}">
+                                            <i class="fas fa-user"></i>
+                                            <p>Users</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('roles.index') }}"
+                                            class="nav-link {{ request()->is('roles*') ? 'active' : '' }}">
+                                            <i class="fas fa-user-shield"></i>
+                                            <p>Roles</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('permissions.index') }}"
+                                            class="nav-link {{ request()->is('permissions*') ? 'active' : '' }}">
+                                            <i class="fas fa-lock"></i>
+                                            <p>Permissions</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('groups.index') }}"
+                                            class="nav-link {{ request()->is('groups*') ? 'active' : '' }}">
+                                            <i class="fas fa-users"></i>
+                                            <p>Groups</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                        @if (auth()->user()->role_id == 5 || auth()->user()->role_id == 1)
+                            <li
+                                class="nav-item has-treeview {{ request()->is('salary_types*') || request()->is('sections*') || request()->is('workers*') ? 'menu-open' : '' }}">
+                                <a href="#"
+                                    class="nav-link {{ request()->is('salary_types*') || request()->is('sections*') || request()->is('workers*') ? 'active' : '' }}">
+                                    <i class="fas fa-user-tie"></i>
+                                    <p>
+                                        HR
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('salary_types.index') }}"
+                                            class="nav-link {{ request()->is('salary_types*') ? 'active' : '' }}">
+                                            <i class="fas fa-calculator"></i>
+                                            <p>Salary Types</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('sections.index') }}"
+                                            class="nav-link {{ request()->is('sections*') ? 'active' : '' }}">
+                                            <i class="fas fa-layer-group"></i>
+                                            <p>Sections</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('workers.index') }}"
+                                            class="nav-link {{ request()->is('workers*') ? 'active' : '' }}">
+                                            <i class="fas fa-users-cog"></i>
+                                            <p>Workers</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                        @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 7)
+                            <li
+                                class="nav-item has-treeview {{ request()->is('warehouses*') || request()->is('revenues*') ? 'menu-open' : '' }}">
+                                <a href="#"
+                                    class="nav-link {{ request()->is('warehouses*') || request()->is('revenues*') ? 'active' : '' }}">
+                                    <i class="fas fa-warehouse"></i>
+                                    <p>
+                                        Warehouse Manager
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('warehouses.index') }}"
+                                            class="nav-link {{ request()->is('warehouses*') ? 'active' : '' }}">
+                                            <i class="fas fa-boxes"></i>
+                                            <p>Warehouses</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('revenues.index') }}"
+                                            class="nav-link {{ request()->is('revenues*') ? 'active' : '' }}">
+                                            <i class="fas fa-chart-line"></i>
+                                            <p>Revenues</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
+                        @if (auth()->user()->role_id == 1 || auth()->user()->role_id == 4)
+                            <li
+                                class="nav-item has-treeview {{ request()->is('products*') || request()->is('machines*') || request()->is('produces*') || request()->is('manufactures*') ? 'menu-open' : '' }}">
+                                <a href="#"
+                                    class="nav-link {{ request()->is('products*') || request()->is('machines*') || request()->is('produces*') || request()->is('manufactures*') ? 'active' : '' }}">
+                                    <i class="fas fa-cogs"></i>
+                                    <p>
+                                        Manufacturer
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('products.index') }}"
+                                            class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
+                                            <i class="fas fa-tags"></i>
+                                            <p>Products</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('machines.index') }}"
+                                            class="nav-link {{ request()->is('machines*') ? 'active' : '' }}">
+                                            <i class="fas fa-tractor"></i>
+                                            <p>Machines</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('produces.index') }}"
+                                            class="nav-link {{ request()->is('produces*') ? 'active' : '' }}">
+                                            <i class="fas fa-industry"></i>
+                                            <p>Production</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('manufactures.index') }}"
+                                            class="nav-link {{ request()->is('manufactures*') ? 'active' : '' }}">
+                                            <i class="fas fa-tools"></i>
+                                            <p>Manufacture</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                         <li class="list-group-item">
                             <form action="{{ route('logout') }}" method="POST"
                                 class="d-flex align-items-center w-100">
@@ -228,6 +256,9 @@
             </div>
         </aside>
 
+        @if (request()->route()->getName() == 'manufactures.index')
+            {{ $slot }}
+        @endif
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">

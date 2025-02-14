@@ -129,7 +129,6 @@ class ProductComponent extends Component
                 'material_id' => $mat['material_id'],
                 'value' => $mat['value'],
                 'unit' => $unit,
-                'warehouse_id' => 1
             ]);
         }
 

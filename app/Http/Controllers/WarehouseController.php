@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\History;
 use App\Models\User;
 use App\Models\Warehouse;
 use App\Models\WarehouseMaterial;
@@ -84,6 +85,8 @@ class WarehouseController extends Controller
         if ($material->value < $request->quantity) {
             return redirect()->back()->with('error', 'Not enough materials in stock.');
         }
+        $value = $material->value;
+
         $material->value -= $request->quantity;
         $material->save();
 
@@ -102,6 +105,16 @@ class WarehouseController extends Controller
                 'type' => 2
             ]);
         }
+
+        History::create([
+            'type' => 2,
+            'material_id' => $request->material_id,
+            'quantity' => $request->quantity,
+            'was' => $value,
+            'been' => $material->value,
+            'from_id' => $request->real,
+            'to_id' => $request->warehouse_id
+        ]);
 
         return redirect()->back()->with('update', 'Transfer made successfully.');
     }

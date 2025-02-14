@@ -12,6 +12,7 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WorkerController;
+use App\Livewire\ManufactureComponent;
 use App\Livewire\ProduceComponent;
 use App\Livewire\ProductComponent;
 
@@ -118,5 +119,9 @@ Route::middleware('check')->group(function () {
 
     Route::prefix('produces')->group(function () {
         Route::get('/',ProduceComponent::class)->name('produces.index');
+    });
+
+    Route::prefix('manufactures')->group(function () {
+        Route::get('/', ManufactureComponent::class)->name('manufactures.index');
     });
 });

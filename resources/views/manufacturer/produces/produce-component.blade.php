@@ -12,8 +12,8 @@
                         <th>#</th>
                         <th>Product</th>
                         <th>Count</th>
-                        <th>Defect</th>
                         <th>Quality</th>
+                        <th>Defect</th>
                         <th>Given time</th>
                         <th>End time</th>
                         <th>Status</th>
@@ -26,13 +26,13 @@
                             <td>{{ $produce->id }}</td>
                             <td>{{ $produce->product->name }}</td>
                             <td>{{ $produce->count }}</td>
-                            <td>{{ $produce->defect }}</td>
                             <td>{{ $produce->quality }}</td>
+                            <td>{{ $produce->defect }}</td>
                             <td>{{ $produce->created_at->format('d M, Y h:i A') }}</td>
-                            @if ($produce->created_at == $produce->updated_at)
-                                <td>Not end</td>
-                            @else
+                            @if ($produce->created_at != $produce->updated_at && $produce->status == 2)
                                 <td>{{ $produce->updated_at->format('d M, Y h:i A') }}</td>
+                            @else
+                                <td>Not end</td>
                             @endif
                             <td>
                                 @if ($produce->status == 0)
@@ -74,7 +74,8 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
 
-                        <input type="number" class="form-control mb-2" placeholder="Count" wire:model="count">
+                        <input type="number" class="form-control mb-2" placeholder="Count" wire:model="count"
+                            max="{{ $maxCount }}" min="1">
                         @error('count')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -88,13 +89,19 @@
                                         <option value="{{ $machine->id }}">{{ $machine->name }}</option>
                                     @endforeach
                                 </select>
+                                @error("machines.$index.machine_id")
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
 
                                 <select class="form-control" wire:model="machines.{{ $index }}.user_id">
                                     <option value="">Select User</option>
-                                    @foreach ($users->where('machine_id', $machines[$index]['machine_id']) as $user)
+                                    @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 </select>
+                                @error("machines.$index.user_id")
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
 
                                 <button class="btn btn-danger"
                                     wire:click="removeMachine({{ $index }})">×</button>

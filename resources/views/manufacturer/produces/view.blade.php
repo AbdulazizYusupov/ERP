@@ -16,8 +16,9 @@
                                 <th>Machine</th>
                                 <th>User</th>
                                 <th>Count</th>
-                                <th>Defect</th>
                                 <th>Quality</th>
+                                <th>Defect</th>
+                                <th>Start time</th>
                                 <th>End time</th>
                                 <th>Status</th>
                             </tr>
@@ -28,12 +29,13 @@
                                     <td>{{ $machineProduce->machine->name }}</td>
                                     <td>{{ $machineProduce->user->name }}</td>
                                     <td>{{ $machineProduce->count }}</td>
-                                    <td>{{ $machineProduce->defect }}</td>
                                     <td>{{ $machineProduce->quality }}</td>
-                                    @if ($machineProduce->created_at == $machineProduce->updated_at && $machineProduce->status != 2)
-                                        <td>Not end</td>
-                                    @else
+                                    <td>{{ $machineProduce->defect }}</td>
+                                    <td>{{ $machineProduce->created_at->format('d M, Y h:i A') }}</td>
+                                    @if ($machineProduce->created_at != $machineProduce->updated_at && $machineProduce->status == 2)
                                         <td>{{ $machineProduce->updated_at->format('d M, Y h:i A') }}</td>
+                                    @else
+                                        <td>Not end</td>
                                     @endif
                                     <td>
                                         @if ($machineProduce->status == 0)
