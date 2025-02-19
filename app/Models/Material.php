@@ -12,4 +12,9 @@ class Material extends Model
     {
         return $this->hasMany(EntryMaterial::class,'material_id');
     }
+
+    public function warehouse_materials()
+    {
+        return $this->hasMany(WarehouseMaterial::class,'product_id');
+    }
 }

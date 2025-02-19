@@ -7,12 +7,13 @@ use App\Models\ProductMaterial;
 use App\Models\Material;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class ProductComponent extends Component
 {
     use WithFileUploads;
 
-    public $products, $name, $image, $materials = [], $product_id;
+    public $products, $name, $image, $materials = [], $product_id, $price;
     public $modalOpen = false, $editModalOpen = false, $viewModalOpen = false;
     public $viewMaterials = [];
 
@@ -43,6 +44,7 @@ class ProductComponent extends Component
         $product = Product::with('product_materials')->findOrFail($id);
         $this->product_id = $product->id;
         $this->name = $product->name;
+        $this->price = $product->price;
         $this->materials = $product->product_materials->map(function ($mat) {
             return ['material_id' => $mat->material_id, 'value' => $mat->value, 'unit' => $mat->unit];
         })->toArray();
@@ -79,6 +81,7 @@ class ProductComponent extends Component
         $this->validate([
             'name' => 'required|string|max:255',
             'image' => 'nullable|image|max:2048',
+            'price' => 'required|numeric|min:1',
             'materials.*.material_id' => 'required|exists:materials,id',
             'materials.*.value' => 'required|numeric|min:0.1',
         ]);
@@ -87,7 +90,9 @@ class ProductComponent extends Component
 
         $product = Product::create([
             'name' => $this->name,
-            'image' => $imagePath
+            'image' => $imagePath,
+            'price' => $this->price,
+            'slug' => Str::slug($this->name),
         ]);
 
         foreach ($this->materials as $mat) {
@@ -111,12 +116,13 @@ class ProductComponent extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:1',
             'materials.*.material_id' => 'required|exists:materials,id',
             'materials.*.value' => 'required|numeric|min:0.1',
         ]);
 
         $product = Product::findOrFail($this->product_id);
-        $product->update(['name' => $this->name]);
+        $product->update(['name' => $this->name, 'price' => $this->price]);
 
         ProductMaterial::where('product_id', $product->id)->delete();
 

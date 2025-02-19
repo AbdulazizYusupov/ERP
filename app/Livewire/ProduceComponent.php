@@ -125,6 +125,8 @@ class ProduceComponent extends Component
             }
         }
 
+        
+
         session()->flash('message', 'Created Successfully!');
         $this->closeModal();
     }

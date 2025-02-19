@@ -17,4 +17,9 @@ class WarehouseMaterial extends Model
     {
         return $this->belongsTo(Warehouse::class,'warehouse_id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class,'product_id');
+    }
 }

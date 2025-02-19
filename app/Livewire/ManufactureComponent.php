@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\MachineProduce;
 use App\Models\Produce;
+use App\Models\Warehouse;
+use App\Models\WarehouseMaterial;
 use Livewire\Component;
 
 class ManufactureComponent extends Component
@@ -58,41 +60,6 @@ class ManufactureComponent extends Component
         $this->allow2 = ($this->allow2 == $id) ? false : $id;
     }
 
-    // public function moveToDone($id)
-    // {
-    //     dd($id);
-    //     $machineProduce = MachineProduce::findOrFail($id);
-
-    //     $produce = $machineProduce->produce;
-
-    //     if (!$machineProduce) {
-    //         return;
-    //     }
-
-    //     $machineProduce->defect = $this->defect;
-    //     $machineProduce->quality = max(0, $machineProduce->count - $this->defect);
-    //     $machineProduce->status = 2;
-    //     $machineProduce->save();
-
-    //     $nextMachineProduce = MachineProduce::where('produce_id', $id)
-    //         ->where('id', '>', $machineProduce->id)
-    //         ->first();
-
-    //     if ($nextMachineProduce) {
-    //         $nextMachineProduce->count = $machineProduce->quality;
-    //         $nextMachineProduce->status = 0;
-    //         $nextMachineProduce->save();
-    //     } else {
-    //         $produce->status = 2;
-    //         $produce->quality = $machineProduce->quality;
-    //         $produce->defect = $machineProduce->defect;
-    //         $produce->save();
-    //     }
-
-    //     $this->defect = 0;
-    //     $this->allow3 = false;
-    // }
-
     public function consent($id)
     {
         $this->allow3 = ($this->allow3 == $id) ? false : $id;
@@ -115,6 +82,7 @@ class ManufactureComponent extends Component
         $currentMachine->defect = $this->defect;
         $currentMachine->quality = max(0, $currentMachine->count - $this->defect);
         $currentMachine->status = 2;
+
         $currentMachine->save();
 
         $nextMachine = MachineProduce::where('id', $id + 1)
@@ -132,6 +100,20 @@ class ManufactureComponent extends Component
             $produce->quality = $currentMachine->quality;
             $produce->defect = MachineProduce::where('produce_id', $produce->id)->sum('defect');
             $produce->save();
+
+            $warehouse = WarehouseMaterial::where('warehouse_id', 1)->first();
+            if ($warehouse->product_id == $currentMachine->produce->product_id && $warehouse->type == 2) {
+                dd($currentMachine->produce->product_id, $warehouse->product_id);
+                $warehouse->value += $currentMachine->quality;
+                $warehouse->save();
+            } else {
+                WarehouseMaterial::create([
+                    'warehouse_id' => 1,
+                    'product_id' => $currentMachine->produce->product_id,
+                    'value' => $currentMachine->quality,
+                    'type' => 2
+                ]);
+            }
         }
 
         $this->defect = 0;

@@ -12,6 +12,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Image</th>
+                        <th>Price</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                                     <span>Image Not Found</span>
                                 @endif
                             </td>
+                            <td>{{ $product->price }}</td>
                             <td>
                                 <button wire:click="viewProduct({{ $product->id }})" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i>

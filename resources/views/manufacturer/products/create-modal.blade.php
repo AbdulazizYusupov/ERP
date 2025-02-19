@@ -7,10 +7,19 @@
             </div>
             <div class="modal-body">
                 <input type="text" class="form-control mb-2" placeholder="Product Name" wire:model="name" required>
-                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                @error('name')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+
+                <input type="number" class="form-control mb-2" placeholder="Price" wire:model="price" required>
+                @error('price')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
 
                 <input type="file" class="form-control mb-2" wire:model="image" required>
-                @error('image') <span class="text-danger">{{ $message }}</span> @enderror
+                @error('image')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
 
                 <h6>Materials</h6>
                 @foreach ($materials as $index => $material)

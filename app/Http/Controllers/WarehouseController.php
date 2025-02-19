@@ -80,7 +80,11 @@ class WarehouseController extends Controller
             'real' => 'required|exists:warehouses,id',
         ]);
 
-        $material = WarehouseMaterial::where('warehouse_id', $request->real)->get()->first();
+        if ($request->type) {
+            $material = WarehouseMaterial::where('warehouse_id', $request->real)->where('product_id', $request->material_id)->where('type', $request->type)->first();
+        } else {
+            $material = WarehouseMaterial::where('warehouse_id', $request->real)->where('product_id', $request->material_id)->first();
+        }
 
         if ($material->value < $request->quantity) {
             return redirect()->back()->with('error', 'Not enough materials in stock.');
@@ -90,20 +94,36 @@ class WarehouseController extends Controller
         $material->value -= $request->quantity;
         $material->save();
 
-        $targetMaterial = WarehouseMaterial::where('warehouse_id', $request->warehouse_id)
-            ->where('product_id', $request->material_id)
-            ->first();
+        if ($request->type) {
+            $targetMaterial = WarehouseMaterial::where('warehouse_id', $request->warehouse_id)
+                ->where('product_id', $request->material_id)
+                ->where('type', $request->type)
+                ->first();
+        } else {
+            $targetMaterial = WarehouseMaterial::where('warehouse_id', $request->warehouse_id)
+                ->where('product_id', $request->material_id)
+                ->first();
+        }
 
         if ($targetMaterial) {
             $targetMaterial->value += $request->quantity;
             $targetMaterial->save();
         } else {
-            WarehouseMaterial::create([
-                'warehouse_id' => $request->warehouse_id,
-                'product_id' => $request->material_id,
-                'value' => $request->quantity,
-                'type' => 2
-            ]);
+            if ($request->type) {
+                WarehouseMaterial::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'product_id' => $request->material_id,
+                    'value' => $request->quantity,
+                    'type' => $request->type
+                ]);
+            } else {
+                WarehouseMaterial::create([
+                    'warehouse_id' => $request->warehouse_id,
+                    'product_id' => $request->material_id,
+                    'value' => $request->quantity,
+                    'type' => 1
+                ]);
+            }
         }
 
         History::create([
