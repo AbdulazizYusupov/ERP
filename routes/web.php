@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\PermissionController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\WorkerController;
 use App\Livewire\ManufactureComponent;
+use App\Livewire\OrderComponent;
 use App\Livewire\ProduceComponent;
 use App\Livewire\ProductComponent;
 
@@ -118,10 +120,23 @@ Route::middleware('check')->group(function () {
     });
 
     Route::prefix('produces')->group(function () {
-        Route::get('/',ProduceComponent::class)->name('produces.index');
+        Route::get('/', ProduceComponent::class)->name('produces.index');
     });
 
     Route::prefix('manufactures')->group(function () {
         Route::get('/', ManufactureComponent::class)->name('manufactures.index');
+    });
+
+    Route::prefix('clients')->group(function () {
+        Route::get('/', [ClientController::class, 'index'])->name('clients.index');
+        Route::get('/create', [ClientController::class, 'create'])->name('clients.create');
+        Route::post('/', [ClientController::class, 'store'])->name('clients.store');
+        Route::get('/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
+        Route::put('/{client}', [ClientController::class, 'update'])->name('clients.update');
+        Route::delete('/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
+    });
+
+    Route::prefix('orders')->group(function () {
+        Route::get('/', OrderComponent::class)->name('orders.index');
     });
 });

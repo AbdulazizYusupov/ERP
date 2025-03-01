@@ -241,6 +241,20 @@
                                 </ul>
                             </li>
                         @endif
+                        <li class="nav-item">
+                            <a href="{{ route('clients.index') }}"
+                                class="nav-link {{ request()->is('clients*') ? 'active' : '' }}">
+                                <i class="fas fa-id-card"></i>
+                                <p>Client</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('orders.index') }}"
+                                class="nav-link {{ request()->is('orders*') ? 'active' : '' }}">
+                                <i class="fas fa-box"></i>
+                                <p>Order</p>
+                            </a>
+                        </li>
                         <li class="list-group-item">
                             <form action="{{ route('logout') }}" method="POST"
                                 class="d-flex align-items-center w-100">
@@ -262,7 +276,7 @@
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">
-                    @if (request()->route()->getName() == 'products.index' || request()->route()->getName() == 'produces.index')
+                    @if (request()->route()->getName() == 'products.index' || request()->route()->getName() == 'produces.index' || request()->route()->getName() == 'orders.index')
                         {{ $slot }}
                     @else
                         @yield('content')

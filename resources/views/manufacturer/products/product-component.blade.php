@@ -28,7 +28,7 @@
                                     <span>Image Not Found</span>
                                 @endif
                             </td>
-                            <td>{{ $product->price }}</td>
+                            <td>{{ number_format($product->price) }} so'm</td>
                             <td>
                                 <button wire:click="viewProduct({{ $product->id }})" class="btn btn-info btn-sm">
                                     <i class="fas fa-eye"></i>

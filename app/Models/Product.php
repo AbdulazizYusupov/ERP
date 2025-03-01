@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ActionTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use ActionTrait;
     protected $fillable = ['name','image','slug','price'];
 
     public function product_materials()

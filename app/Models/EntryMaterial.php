@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ActionTrait as TraitsActionTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class EntryMaterial extends Model
 {
+    use TraitsActionTrait;
     protected $fillable = [
         'entry_id',
         'material_id',

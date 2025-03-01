@@ -3,12 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Traits\ActionTrait as TraitsActionTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    use TraitsActionTrait;
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -65,5 +68,10 @@ class User extends Authenticatable
     public function machine_produces()
     {
         return $this->hasMany(MachineProduce::class, 'user_id');
+    }
+
+    public function actions()
+    {
+        return $this->hasMany(Action::class, 'user_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\History;
 use App\Models\MachineProduce;
 use App\Models\Produce;
 use App\Models\Warehouse;
@@ -103,7 +104,6 @@ class ManufactureComponent extends Component
 
             $warehouse = WarehouseMaterial::where('warehouse_id', 1)->first();
             if ($warehouse->product_id == $currentMachine->produce->product_id && $warehouse->type == 2) {
-                dd($currentMachine->produce->product_id, $warehouse->product_id);
                 $warehouse->value += $currentMachine->quality;
                 $warehouse->save();
             } else {

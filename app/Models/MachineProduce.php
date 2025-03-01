@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ActionTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class MachineProduce extends Model
 {
+    use ActionTrait;
     protected $fillable = ['machine_id', 'produce_id', 'count', 'defect', 'user_id','quality','status'];
 
     public function machine()

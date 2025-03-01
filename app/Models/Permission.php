@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\ActionTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
+    use ActionTrait;
     protected $fillable = ['key','name','group_id','status'];
 
     public function roles()

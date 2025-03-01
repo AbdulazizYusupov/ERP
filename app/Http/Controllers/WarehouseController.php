@@ -89,7 +89,7 @@ class WarehouseController extends Controller
         if ($material->value < $request->quantity) {
             return redirect()->back()->with('error', 'Not enough materials in stock.');
         }
-        $value = $material->value;
+        $value = $material->value ?? 0;
 
         $material->value -= $request->quantity;
         $material->save();
@@ -97,14 +97,12 @@ class WarehouseController extends Controller
         if ($request->type) {
             $targetMaterial = WarehouseMaterial::where('warehouse_id', $request->warehouse_id)
                 ->where('product_id', $request->material_id)
-                ->where('type', $request->type)
-                ->first();
+                ->where('type', $request->type)->get()->first();
         } else {
             $targetMaterial = WarehouseMaterial::where('warehouse_id', $request->warehouse_id)
                 ->where('product_id', $request->material_id)
                 ->first();
         }
-
         if ($targetMaterial) {
             $targetMaterial->value += $request->quantity;
             $targetMaterial->save();
@@ -125,16 +123,28 @@ class WarehouseController extends Controller
                 ]);
             }
         }
+        if ($request->type) {
+            History::create([
+                'type' => 4,
+                'material_id' => $request->material_id,
+                'quantity' => $request->quantity,
+                'was' => $value,
+                'been' => $material->value,
+                'from_id' => $request->real,
+                'to_id' => $request->warehouse_id
+            ]);
+        } else {
 
-        History::create([
-            'type' => 2,
-            'material_id' => $request->material_id,
-            'quantity' => $request->quantity,
-            'was' => $value,
-            'been' => $material->value,
-            'from_id' => $request->real,
-            'to_id' => $request->warehouse_id
-        ]);
+            History::create([
+                'type' => 2,
+                'material_id' => $request->material_id,
+                'quantity' => $request->quantity,
+                'was' => $value,
+                'been' => $material->value,
+                'from_id' => $request->real,
+                'to_id' => $request->warehouse_id
+            ]);
+        }
 
         return redirect()->back()->with('update', 'Transfer made successfully.');
     }

@@ -10,7 +10,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Section;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -77,5 +77,8 @@ class DatabaseSeeder extends Seeder
         Section::create([
             'name' => 'Boshqaruv',
         ]);
+        
+        Artisan::call('permissions:generate');
     }
+
 }
